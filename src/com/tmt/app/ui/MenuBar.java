@@ -8,14 +8,15 @@ import javax.swing.JMenuItem;
 
 import com.tmt.app.listeners.MenuBarActionListeners;
 
-public class TMTMenuBar extends JMenuBar {
+public class MenuBar extends JMenuBar {
 	private static final long serialVersionUID = 1L;
 
 	private JMenu file, help;
 	public JMenuItem upload, recent;
 	public JMenuItem userManual;
+	public JMenuItem fontSettings;
 
-	public TMTMenuBar() {
+	public MenuBar() {
 		super();
 		this.init();
 		this.addItems();
@@ -36,20 +37,25 @@ public class TMTMenuBar extends JMenuBar {
 		
 		userManual = new JMenuItem("User Manual");
 		userManual.setMnemonic(KeyEvent.VK_U);
+		
+		fontSettings = new JMenuItem("Font Settings");
+		fontSettings.setMnemonic(KeyEvent.VK_S);
 	}
 
 	public void addItems() {
 		file.add(upload);
 		file.add(recent);
 		help.add(userManual);
+		help.add(fontSettings);
 		
-		this.add(file);
-		this.add(help);
+		add(file);
+		add(help);
 	}
 
 	public void addActionListeners(MenuBarActionListeners menuBarActionListener) {
 		upload.addActionListener(menuBarActionListener);
 		recent.addActionListener(menuBarActionListener);
 		userManual.addActionListener(menuBarActionListener);
+		fontSettings.addActionListener(menuBarActionListener);	
 	}
 }

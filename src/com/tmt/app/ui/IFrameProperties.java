@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 
 public interface IFrameProperties {
 	default void before(JFrame frame) {
-		//frame.setLayout(null);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setSize(screenSize.width - 100, screenSize.height - 100);
 		frame.setLocation(screenSize.width / 2 - frame.getSize().width / 2,
