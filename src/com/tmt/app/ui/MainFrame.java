@@ -62,6 +62,7 @@ public class MainFrame extends JFrame implements IFrameProperties {
 		mainFrameDesign.outputCopy.addActionListener(mainFrameActionListener);
 		mainFrameDesign.download.addActionListener(mainFrameActionListener);
 		mainFrameDesign.convert.addActionListener(mainFrameActionListener);
+		mainFrameDesign.exchange.addActionListener(mainFrameActionListener);
 	}
 
 	public void addMenuBar() {

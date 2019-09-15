@@ -5,7 +5,13 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 import com.tmt.app.ui.MainFrameDesign;
+import com.tmt.app.ui.dialog.DownloadDialog;
+import com.tmt.app.ui.dialog.UploadDialog;
+import com.tmt.model.DownloadEntity;
 import com.tmt.model.Languages;
 import com.tmt.model.TranslateDetails;
 import com.tmt.service.TranslatorService;
@@ -45,7 +51,33 @@ public class MainFrameActionListener implements ActionListener {
 		}
 
 		if (ae.getSource() == mainFrameDesign.download) {
+			String sourceText = mainFrameDesign.inputEditor.getText();
+			String targetText = mainFrameDesign.outputEditor.getText();
+			String selectedSourceLang = mainFrameDesign.inputLangComboBox.getSelectedItem().toString();
+			String selectedTargetLang = mainFrameDesign.outputLangComboBox.getSelectedItem().toString();
+			
+			DownloadEntity downloadEntity = new DownloadEntity();
+			downloadEntity.setSourceText(sourceText);
+			downloadEntity.setTargetText(targetText);
+			downloadEntity.setSourceLanguage(selectedSourceLang);
+			downloadEntity.setTargetLanguage(selectedTargetLang);
+			
+			DownloadDialog downloadDialog = new DownloadDialog();
+			downloadDialog.setDownloadEntity(downloadEntity);
+			JOptionPane optionPane = new JOptionPane();
+			JDialog dialog = optionPane.createDialog("Download file dialog");
+			dialog.setSize(530, 135);
+			dialog.setLocationRelativeTo(mainFrameDesign);
+			downloadDialog.setDialog(dialog);
+			dialog.setContentPane(downloadDialog);
+			dialog.setVisible(true);
+		}
 
+		if (ae.getSource() == mainFrameDesign.exchange) {
+			String sourceText = mainFrameDesign.inputEditor.getText();
+			String targetText = mainFrameDesign.outputEditor.getText();
+			mainFrameDesign.inputEditor.setText(targetText);
+			mainFrameDesign.outputEditor.setText(sourceText);
 		}
 
 		if (ae.getSource() == mainFrameDesign.convert) {
@@ -64,7 +96,7 @@ public class MainFrameActionListener implements ActionListener {
 			translateDetails.setSourceLanguage(languageMap.get(sourceLang));
 			translateDetails.setTargetLanguage(languageMap.get(targetLang));
 			translateDetails.setText(text);
-			
+
 			TranslatorService translatorService = new TranslatorService();
 			try {
 				String translatedText = translatorService.getTranslatedText(translateDetails);
