@@ -9,12 +9,16 @@ import java.util.Date;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.tmt.constants.Resources;
 import com.tmt.model.DownloadEntity;
 
 public class DownloadService {
+	private static final Logger LOG = LoggerFactory.getLogger(DownloadService.class);
 	public void download(DownloadEntity downloadDetails) throws IOException {
+		LOG.debug("In download {}", downloadDetails);
 		SimpleDateFormat dateFormat = new SimpleDateFormat(Resources.DOWNLOAD_DATE_FORMAT);
 		String currentDate = dateFormat.format(new Date());
 		String filename = Resources.APP_NAME + "-" + currentDate + downloadDetails.getExtension();
@@ -25,6 +29,7 @@ public class DownloadService {
 		} else if (Resources.TXT.equals(downloadDetails.getExtension().replaceAll("\\.", ""))) {
 			exportTextFile(downloadDetails, filePath);
 		}
+		
 	}
 
 	public void exportTextFile(DownloadEntity downloadDetails, String filePath) throws IOException {
@@ -40,7 +45,7 @@ public class DownloadService {
 		fileOuputStream.write(content.toString().getBytes());
 		fileOuputStream.flush();
 		fileOuputStream.close();
-		System.out.println("File written success!");
+		LOG.debug("Text file exported successfully!");
 	}
 
 	public void exportWordFile(DownloadEntity downloadDetails, String filePath) throws IOException {
@@ -72,7 +77,7 @@ public class DownloadService {
 		document.write(out);
 		out.close();
 		document.close();
-		System.out.println("File downloaded");
+		LOG.debug("Word file exported successfully!");
 	}
 
 	public static void main(String[] args) throws IOException {

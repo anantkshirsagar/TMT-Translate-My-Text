@@ -8,6 +8,9 @@ import java.util.Map;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.tmt.app.ui.MainFrameDesign;
 import com.tmt.app.ui.dialog.DownloadDialog;
 import com.tmt.app.ui.dialog.UploadDialog;
@@ -20,6 +23,7 @@ import com.tmt.util.Utility;
 
 public class MainFrameActionListener implements ActionListener {
 
+	private static final Logger LOG = LoggerFactory.getLogger(MainFrameActionListener.class);
 	private final MainFrameDesign mainFrameDesign;
 
 	public MainFrameActionListener(MainFrameDesign mainFrameDesign) {
@@ -29,28 +33,32 @@ public class MainFrameActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == mainFrameDesign.inputClear) {
+			LOG.debug("Clearing input text...");
 			mainFrameDesign.inputEditor.setText("");
 		}
 
 		if (ae.getSource() == mainFrameDesign.outputClear) {
+			LOG.debug("Clearing output text...");
 			mainFrameDesign.outputEditor.setText("");
 		}
 
 		if (ae.getSource() == mainFrameDesign.save) {
-
 		}
 
 		if (ae.getSource() == mainFrameDesign.inputCopy) {
+			LOG.debug("Input text copied");
 			String inputText = mainFrameDesign.inputEditor.getText();
 			ComponentUtils.copyToClipboard(inputText);
 		}
 
 		if (ae.getSource() == mainFrameDesign.outputCopy) {
+			LOG.debug("Output text copied");
 			String outputText = mainFrameDesign.outputEditor.getText();
 			ComponentUtils.copyToClipboard(outputText);
 		}
 
 		if (ae.getSource() == mainFrameDesign.download) {
+			LOG.debug("File downloading...");
 			String sourceText = mainFrameDesign.inputEditor.getText();
 			String targetText = mainFrameDesign.outputEditor.getText();
 			String selectedSourceLang = mainFrameDesign.inputLangComboBox.getSelectedItem().toString();
@@ -76,11 +84,15 @@ public class MainFrameActionListener implements ActionListener {
 		if (ae.getSource() == mainFrameDesign.exchange) {
 			String sourceText = mainFrameDesign.inputEditor.getText();
 			String targetText = mainFrameDesign.outputEditor.getText();
+			String selectedInputLang = mainFrameDesign.inputLangComboBox.getSelectedItem().toString();
+			mainFrameDesign.inputLangComboBox.setSelectedItem(mainFrameDesign.outputLangComboBox.getSelectedItem());
+			mainFrameDesign.outputLangComboBox.setSelectedItem(selectedInputLang);
 			mainFrameDesign.inputEditor.setText(targetText);
 			mainFrameDesign.outputEditor.setText(sourceText);
 		}
 
 		if (ae.getSource() == mainFrameDesign.convert) {
+			LOG.debug("Converting text from source to target language...");
 			String text = mainFrameDesign.inputEditor.getText();
 
 			String sourceLang = mainFrameDesign.inputLangComboBox.getSelectedItem().toString();
@@ -107,5 +119,4 @@ public class MainFrameActionListener implements ActionListener {
 			}
 		}
 	}
-
 }
