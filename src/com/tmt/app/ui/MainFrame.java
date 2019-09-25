@@ -40,7 +40,7 @@ public class MainFrame extends JFrame implements IFrameProperties {
 		after(this);
 	}
 
-	public void loadLanguages() throws FileNotFoundException, IOException {
+	public void loadLanguages() throws IOException {
 		InputStream fileIS = Thread.currentThread().getContextClassLoader()
 				.getResourceAsStream(UIConstants.LANGUAGE_SOURCE_PATH);
 		languageReader = new LanguageReader(fileIS);

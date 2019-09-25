@@ -64,7 +64,7 @@ public class UploadDialog extends JPanel implements IDesign, ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == browse) {
 			fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-			FileNameExtensionFilter fileFilter = new FileNameExtensionFilter("Files", Resources.EXTENSIONS);
+			FileNameExtensionFilter fileFilter = new FileNameExtensionFilter("Files", Resources.EXTENSION);
 			fileChooser.setFileFilter(fileFilter);
 
 			int r = fileChooser.showOpenDialog(null);

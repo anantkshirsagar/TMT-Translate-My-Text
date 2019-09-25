@@ -54,7 +54,7 @@ public class DownloadDialog extends JPanel implements IDesign, ActionListener {
 		browse = new JButton("Choose Folder");
 		browse.setBounds(30, 40, 130, 30);
 
-		extensionComboBox = new JComboBox<String>(Resources.EXTENSIONS);
+		extensionComboBox = new JComboBox<String>(Resources.EXTENSION);
 		extensionComboBox.setBounds(170, 40, 100, 30);
 
 		download = new JButton("Download");

@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import com.tmt.app.ui.MainFrameDesign;
 import com.tmt.app.ui.dialog.DownloadDialog;
-import com.tmt.app.ui.dialog.UploadDialog;
 import com.tmt.model.DownloadEntity;
 import com.tmt.model.Languages;
 import com.tmt.model.TranslateDetails;
@@ -43,6 +42,7 @@ public class MainFrameActionListener implements ActionListener {
 		}
 
 		if (ae.getSource() == mainFrameDesign.save) {
+			LOG.debug("Saving content");
 		}
 
 		if (ae.getSource() == mainFrameDesign.inputCopy) {
@@ -96,10 +96,10 @@ public class MainFrameActionListener implements ActionListener {
 			String text = mainFrameDesign.inputEditor.getText();
 
 			String sourceLang = mainFrameDesign.inputLangComboBox.getSelectedItem().toString();
-			System.out.println(sourceLang);
+			LOG.debug("Source language {}", sourceLang);
 
 			String targetLang = mainFrameDesign.outputLangComboBox.getSelectedItem().toString();
-			System.out.println(targetLang);
+			LOG.debug("Target language {}", targetLang);
 
 			Languages languages = Utility.getLanguages();
 			Map<String, String> languageMap = languages.getLanguageMap();

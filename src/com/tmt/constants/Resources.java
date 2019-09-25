@@ -5,19 +5,19 @@ import java.io.File;
 public interface Resources {
 	String APP_NAME = "TMT";
 	String CURRENT_WORKING_DIR = System.getProperty("user.dir");
-	String RESOURCES = CURRENT_WORKING_DIR + File.separator + "resources";
-	String ICONS = RESOURCES + File.separator + "icons";
-
+	String RESOURCE = CURRENT_WORKING_DIR + File.separator + "resources";
+	String ICONS = RESOURCE + File.separator + "icons";
 	String EXCHANGE_ICON_IMG = "icons/exchange-icon.png";
-
 	String DOWNLOAD_DATE_FORMAT = "ddMMyyyyHHmmSS";
-
 	String LINE_SEPARATOR = System.lineSeparator();
 
 	// Extensions
 	String DOCX = "docx";
-
 	String TXT = "txt";
+	String[] EXTENSION = { DOCX, TXT };
 
-	String[] EXTENSIONS = { DOCX, TXT };
+	// Path settings
+	String DATABASE_SQL_FILE = "database" + File.separator + "translate_my_text.sql";
+	String SQL_PROPERTIES = "sql_properties" + File.separator + "mysql.properties";
+	String PSQL_PROPERTIES = "sql_properties" + File.separator + "psql.properties";
 }
