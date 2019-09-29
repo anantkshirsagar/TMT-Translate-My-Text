@@ -3,6 +3,7 @@ package com.tmt.constants;
 public interface UIConstants {
 	//MainFrame
 	String MAIN_FRAME_TITLE = "Translate My Text";
+	String RECENT_FRAME_TITLE = "Recent Translated Text";
 	
 	int DEFAULT_FONT_SIZE = 15;
 	int EDITOR_WIDTH = 400;

@@ -3,6 +3,7 @@ package com.tmt.app.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Map;
 
 import javax.swing.JDialog;
@@ -15,7 +16,7 @@ import com.tmt.app.ui.MainFrameDesign;
 import com.tmt.app.ui.dialog.DownloadDialog;
 import com.tmt.model.DownloadEntity;
 import com.tmt.model.Languages;
-import com.tmt.model.TranslateDetails;
+import com.tmt.model.TranslationEntity;
 import com.tmt.service.TranslatorService;
 import com.tmt.util.ComponentUtils;
 import com.tmt.util.Utility;
@@ -63,13 +64,13 @@ public class MainFrameActionListener implements ActionListener {
 			String targetText = mainFrameDesign.outputEditor.getText();
 			String selectedSourceLang = mainFrameDesign.inputLangComboBox.getSelectedItem().toString();
 			String selectedTargetLang = mainFrameDesign.outputLangComboBox.getSelectedItem().toString();
-			
+
 			DownloadEntity downloadEntity = new DownloadEntity();
 			downloadEntity.setSourceText(sourceText);
 			downloadEntity.setTargetText(targetText);
 			downloadEntity.setSourceLanguage(selectedSourceLang);
 			downloadEntity.setTargetLanguage(selectedTargetLang);
-			
+
 			DownloadDialog downloadDialog = new DownloadDialog();
 			downloadDialog.setDownloadEntity(downloadEntity);
 			JOptionPane optionPane = new JOptionPane();
@@ -93,7 +94,6 @@ public class MainFrameActionListener implements ActionListener {
 
 		if (ae.getSource() == mainFrameDesign.convert) {
 			LOG.debug("Converting text from source to target language...");
-			String text = mainFrameDesign.inputEditor.getText();
 
 			String sourceLang = mainFrameDesign.inputLangComboBox.getSelectedItem().toString();
 			LOG.debug("Source language {}", sourceLang);
@@ -104,18 +104,20 @@ public class MainFrameActionListener implements ActionListener {
 			Languages languages = Utility.getLanguages();
 			Map<String, String> languageMap = languages.getLanguageMap();
 
-			TranslateDetails translateDetails = new TranslateDetails();
-			translateDetails.setSourceLanguage(languageMap.get(sourceLang));
-			translateDetails.setTargetLanguage(languageMap.get(targetLang));
-			translateDetails.setText(text);
+			TranslationEntity translationEntity = new TranslationEntity();
+			translationEntity.setCreationDate(new Date());
+			translationEntity.setSourceLanguage(languageMap.get(sourceLang));
+			translationEntity.setSourceText(mainFrameDesign.inputEditor.getText());
+			translationEntity.setTargetLanguage(languageMap.get(targetLang));
+			translationEntity.setTargetText(mainFrameDesign.outputEditor.getText());
+			LOG.debug("translation entity {}", translationEntity);
 
 			TranslatorService translatorService = new TranslatorService();
 			try {
-				String translatedText = translatorService.getTranslatedText(translateDetails);
+				String translatedText = translatorService.getTranslatedText(translationEntity);
 				mainFrameDesign.outputEditor.setText(translatedText);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.error("Translation exception {}", e);
 			}
 		}
 	}

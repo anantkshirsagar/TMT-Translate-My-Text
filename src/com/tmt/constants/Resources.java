@@ -18,6 +18,5 @@ public interface Resources {
 
 	// Path settings
 	String DATABASE_SQL_FILE = "database" + File.separator + "translate_my_text.sql";
-	String SQL_PROPERTIES = "sql_properties" + File.separator + "mysql.properties";
-	String PSQL_PROPERTIES = "sql_properties" + File.separator + "psql.properties";
+	String TMT_CFG = "tmt-configurations.properties";
 }

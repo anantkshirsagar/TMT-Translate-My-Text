@@ -12,9 +12,8 @@ public interface IFrameProperties {
 		frame.setLocation(screenSize.width / 2 - frame.getSize().width / 2,
 				screenSize.height / 2 - frame.getSize().height / 2);
 		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-
+	
 	default void after(JFrame frame) {
 		frame.setVisible(true);
 	}

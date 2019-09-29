@@ -18,6 +18,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.border.TitledBorder;
 
+import com.tmt.constants.ConfigurationConstants;
 import com.tmt.constants.Resources;
 
 public class ComponentUtils {
@@ -65,5 +66,19 @@ public class ComponentUtils {
 			fileContents.append(line).append(Resources.LINE_SEPARATOR);
 		}
 		return fileContents.toString();
+	}
+
+	public static String checkAvailableDatabaseAndGetFilePath(Map<String, String> configurationMap) {
+		if (configurationMap.get(ConfigurationConstants.TMT_DATABASE_PSQL) != null
+				&& Boolean.parseBoolean(configurationMap.get(ConfigurationConstants.TMT_DATABASE_PSQL))) {
+			return configurationMap.get(ConfigurationConstants.TMT_POSTGRES_PROPERTIES);
+		} else if (configurationMap.get(ConfigurationConstants.TMT_DATABASE_MYSQL) != null
+				&& Boolean.parseBoolean(configurationMap.get(ConfigurationConstants.TMT_DATABASE_MYSQL))) {
+			return configurationMap.get(ConfigurationConstants.TMT_MYSQL_PROPERTIES);
+		} else if (configurationMap.get(ConfigurationConstants.TMT_DATABASE_ORACLE) != null
+				&& Boolean.parseBoolean(configurationMap.get(ConfigurationConstants.TMT_DATABASE_ORACLE))) {
+			return configurationMap.get(ConfigurationConstants.TMT_ORACLE_PROPERTIES);
+		}
+		return null;
 	}
 }

@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import com.tmt.app.ui.MainFrameDesign;
 import com.tmt.app.ui.MenuBar;
+import com.tmt.app.ui.RecentFrame;
 import com.tmt.app.ui.dialog.JFontChooser;
 import com.tmt.app.ui.dialog.UploadDialog;
 import com.tmt.util.Utility;
@@ -44,7 +45,7 @@ public class MenuBarActionListeners implements ActionListener {
 		}
 
 		if (menuBar.recent.isArmed()) {
-			LOG.debug("Recent");
+			RecentFrame recentFrame = new RecentFrame();
 		}
 
 		if (menuBar.fontSettings.isArmed()) {

@@ -8,12 +8,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import com.tmt.model.TranslateDetails;
+import com.tmt.model.TranslationEntity;
 
 public class TranslatorService {
 
-	public String getTranslatedText(TranslateDetails translateDetails) throws IOException {
-		String urlStr = getURL(translateDetails);
+	public String getTranslatedText(TranslationEntity translationEntity) throws IOException {
+		String urlStr = getURL(translationEntity);
 		URL url = new URL(urlStr);
 		StringBuilder response = new StringBuilder();
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -27,10 +27,10 @@ public class TranslatorService {
 		return response.toString();
 	}
 
-	public String getURL(TranslateDetails translateDetails) throws UnsupportedEncodingException {
+	public String getURL(TranslationEntity translationEntity) throws UnsupportedEncodingException {
 		String url = "https://script.google.com/macros/s/AKfycbyWYYYE3BdbvYErRVbI-rA3EnDhZtb8oItXvZ1fWcn9tkP5zbp2/exec"
-				+ "?q=" + URLEncoder.encode(translateDetails.getText(), "UTF-8") + "&target="
-				+ translateDetails.getTargetLanguage() + "&source=" + translateDetails.getSourceLanguage();
+				+ "?q=" + URLEncoder.encode(translationEntity.getSourceText(), "UTF-8") + "&target="
+				+ translationEntity.getTargetLanguage() + "&source=" + translationEntity.getSourceLanguage();
 		return url;
 	}
 }

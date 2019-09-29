@@ -1,6 +1,5 @@
 package com.tmt.app.ui;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -9,9 +8,8 @@ import javax.swing.JFrame;
 import com.tmt.app.listeners.MainFrameActionListener;
 import com.tmt.app.listeners.MenuBarActionListeners;
 import com.tmt.constants.UIConstants;
-import com.tmt.model.Languages;
-import com.tmt.util.Utility;
 import com.tmt.util.LanguageReader;
+import com.tmt.util.Utility;
 
 public class MainFrame extends JFrame implements IFrameProperties {
 
@@ -37,6 +35,7 @@ public class MainFrame extends JFrame implements IFrameProperties {
 		addMenuBar();
 
 		Utility.setMainFrameDesign(mainFrameDesign);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		after(this);
 	}
 
