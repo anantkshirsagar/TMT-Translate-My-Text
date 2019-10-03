@@ -1,8 +1,5 @@
 package com.tmt.manager;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -20,8 +17,7 @@ public class ConfigurationReader {
 
 	private static final Logger LOG = LoggerFactory.getLogger(MainFrameActionListener.class);
 
-	public static Map<String, String> getConfigurationProperties(String configurationFile)
-			throws FileNotFoundException, IOException {
+	public static Map<String, String> getConfigurationProperties(String configurationFile) throws IOException {
 		LOG.debug("Loading configurations...");
 		Properties properties = new Properties();
 		InputStream resourceAsStream = Thread.currentThread().getContextClassLoader()
@@ -44,8 +40,25 @@ public class ConfigurationReader {
 		return cfgProperties;
 	}
 
-	public static void main(String[] args) throws FileNotFoundException, IOException {
+	public static void main(String[] args) throws IOException {
 		Map<String, String> configurations = ConfigurationReader.getConfigurationProperties(Resources.TMT_CFG);
 		LOG.debug("configurations {}", configurations);
+	}
+
+	public static String getDBPropertiesPath(Map<String, String> configurationMap) {
+		LOG.debug("Checking database and getting properties.");
+		if (configurationMap != null) {
+			if (Boolean.parseBoolean(configurationMap.get(ConfigurationConstants.TMT_DATABASE_MYSQL))) {
+				LOG.debug("Mysql database detected!");
+				return configurationMap.get(ConfigurationConstants.TMT_MYSQL_PROPERTIES);
+			} else if (Boolean.parseBoolean(configurationMap.get(ConfigurationConstants.TMT_DATABASE_PSQL))) {
+				LOG.debug("Postgresql database detected!");
+				return configurationMap.get(ConfigurationConstants.TMT_POSTGRES_PROPERTIES);
+			} else if (Boolean.parseBoolean(configurationMap.get(ConfigurationConstants.TMT_DATABASE_ORACLE))) {
+				LOG.debug("Oracle database detected!");
+				return configurationMap.get(ConfigurationConstants.TMT_ORACLE_PROPERTIES);
+			}
+		}
+		return null;
 	}
 }

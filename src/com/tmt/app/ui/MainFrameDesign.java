@@ -80,7 +80,7 @@ public class MainFrameDesign extends JPanel implements IDesign {
 		try {
 			imageIcon = ComponentUtils.getImageIcon(Resources.EXCHANGE_ICON_IMG);
 		} catch (IOException e) {
-			System.out.println("Image path exception: " + e);
+			LOG.debug("Image path exception {}", e);
 		}
 		exchange.setIcon(imageIcon);
 		exchange.setBounds(UIConstants.BUTTON_X_AXIS, 295, UIConstants.BUTTON_Y_AXIS, UIConstants.COMPONENT_HEIGHT);
@@ -101,6 +101,7 @@ public class MainFrameDesign extends JPanel implements IDesign {
 
 		save = new JButton("Save");
 		save.setBounds(UIConstants.BUTTON_X_AXIS, 340, 273, UIConstants.COMPONENT_HEIGHT);
+		save.setEnabled(false);
 
 		outputClear = new JButton("Clear");
 		outputClear.setBounds(743, UIConstants.Y_AXIS, UIConstants.COMPONENT_WIDTH, UIConstants.COMPONENT_HEIGHT);

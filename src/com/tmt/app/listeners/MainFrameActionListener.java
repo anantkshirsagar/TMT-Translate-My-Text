@@ -3,6 +3,7 @@ package com.tmt.app.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import com.tmt.app.ui.dialog.DownloadDialog;
 import com.tmt.model.DownloadEntity;
 import com.tmt.model.Languages;
 import com.tmt.model.TranslationEntity;
+import com.tmt.service.DataService;
 import com.tmt.service.TranslatorService;
 import com.tmt.util.ComponentUtils;
 import com.tmt.util.Utility;
@@ -44,6 +46,28 @@ public class MainFrameActionListener implements ActionListener {
 
 		if (ae.getSource() == mainFrameDesign.save) {
 			LOG.debug("Saving content");
+			
+			DataService dataService = new DataService();
+			String sourceLang = mainFrameDesign.inputLangComboBox.getSelectedItem().toString();
+			LOG.debug("Source language {}", sourceLang);
+
+			String targetLang = mainFrameDesign.outputLangComboBox.getSelectedItem().toString();
+			LOG.debug("Target language {}", targetLang);
+
+			Languages languages = Utility.getLanguages();
+			Map<String, String> languageMap = languages.getLanguageMap();
+
+			TranslationEntity translationEntity = new TranslationEntity();
+			translationEntity.setCreationDate(new Date());
+			translationEntity.setSourceLanguage(languageMap.get(sourceLang));
+			translationEntity.setSourceText(mainFrameDesign.inputEditor.getText());
+			translationEntity.setTargetLanguage(languageMap.get(targetLang));
+			translationEntity.setTargetText(mainFrameDesign.outputEditor.getText());
+			try {
+				dataService.insert(translationEntity);
+			} catch (ClassNotFoundException | SQLException e) {
+				LOG.error("Exception {}", e);
+			}
 		}
 
 		if (ae.getSource() == mainFrameDesign.inputCopy) {

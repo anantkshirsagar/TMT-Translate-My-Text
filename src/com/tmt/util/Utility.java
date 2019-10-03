@@ -5,9 +5,14 @@ import com.tmt.app.ui.RecentFrameDesign;
 import com.tmt.model.Languages;
 
 public class Utility {
+
 	private static MainFrameDesign mainFrameDesign;
 	private static Languages languages;
 	private static RecentFrameDesign recentFrameDesign;
+	private static String propertiesFile;
+
+	private Utility() {
+	}
 
 	public static MainFrameDesign getMainFrameDesign() {
 		return mainFrameDesign;
@@ -31,5 +36,13 @@ public class Utility {
 
 	public static void setRecentFrameDesign(RecentFrameDesign recentFrameDesign) {
 		Utility.recentFrameDesign = recentFrameDesign;
+	}
+
+	public static String getPropertiesFile() {
+		return propertiesFile;
+	}
+
+	public static void setPropertiesFile(String propertiesFile) {
+		Utility.propertiesFile = propertiesFile;
 	}
 }
