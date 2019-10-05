@@ -37,14 +37,6 @@ import javax.swing.event.ListSelectionListener;
 
 public class JFontChooser extends JComponent {
 	/**
-	 * Main entry point, for testing only.
-	 */
-//	public static void main(String[] args) {
-//		Font font = JFontChooser.showDialog((Component) null, "Font");
-//		System.out.println("Font: " + font);
-//	}
-
-	/**
 	 * Shows the dialog, with specified parent and title.
 	 */
 	public static Font showDialog(Component parent, String title) {

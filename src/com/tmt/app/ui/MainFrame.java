@@ -5,6 +5,9 @@ import java.io.InputStream;
 
 import javax.swing.JFrame;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.tmt.app.listeners.MainFrameActionListener;
 import com.tmt.app.listeners.MenuBarActionListeners;
 import com.tmt.constants.UIConstants;
@@ -13,6 +16,7 @@ import com.tmt.util.Utility;
 
 public class MainFrame extends JFrame implements IFrameProperties {
 
+	private static final Logger LOG = LoggerFactory.getLogger(MainFrame.class);
 	private static final long serialVersionUID = 1L;
 	private MenuBar menuBar;
 	private MenuBarActionListeners menuBarActionListener;
@@ -28,9 +32,9 @@ public class MainFrame extends JFrame implements IFrameProperties {
 		try {
 			loadLanguages();
 		} catch (IOException e) {
-			System.out.println(" Language exception: " +e);
+			LOG.error(" Language exception {}", e);
 		}
-		
+
 		addCenterPanel();
 		addMenuBar();
 

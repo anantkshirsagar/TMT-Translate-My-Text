@@ -7,14 +7,12 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.Map;
 
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.tmt.app.ui.MainFrameDesign;
-import com.tmt.app.ui.dialog.DownloadDialog;
 import com.tmt.model.DownloadEntity;
 import com.tmt.model.Languages;
 import com.tmt.model.TranslationEntity;
@@ -37,6 +35,7 @@ public class MainFrameActionListener implements ActionListener {
 		if (ae.getSource() == mainFrameDesign.inputClear) {
 			LOG.debug("Clearing input text...");
 			mainFrameDesign.inputEditor.setText("");
+			mainFrameDesign.convert.setEnabled(false);
 		}
 
 		if (ae.getSource() == mainFrameDesign.outputClear) {
@@ -45,9 +44,6 @@ public class MainFrameActionListener implements ActionListener {
 		}
 
 		if (ae.getSource() == mainFrameDesign.save) {
-			LOG.debug("Saving content");
-			
-			DataService dataService = new DataService();
 			String sourceLang = mainFrameDesign.inputLangComboBox.getSelectedItem().toString();
 			LOG.debug("Source language {}", sourceLang);
 
@@ -63,10 +59,20 @@ public class MainFrameActionListener implements ActionListener {
 			translationEntity.setSourceText(mainFrameDesign.inputEditor.getText());
 			translationEntity.setTargetLanguage(languageMap.get(targetLang));
 			translationEntity.setTargetText(mainFrameDesign.outputEditor.getText());
+			if (ComponentUtils.isValidTranslationEntity(translationEntity)) {
+				LOG.debug("Error Message {}", ComponentUtils.getErrorMessage());
+				JOptionPane.showMessageDialog(null, ComponentUtils.getErrorMessage(), "Error",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			DataService dataService = new DataService();
 			try {
 				dataService.insert(translationEntity);
+				JOptionPane.showMessageDialog(null, "Data saved successfully!", "Information",
+						JOptionPane.INFORMATION_MESSAGE);
 			} catch (ClassNotFoundException | SQLException e) {
 				LOG.error("Exception {}", e);
+				JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 
@@ -95,15 +101,7 @@ public class MainFrameActionListener implements ActionListener {
 			downloadEntity.setSourceLanguage(selectedSourceLang);
 			downloadEntity.setTargetLanguage(selectedTargetLang);
 
-			DownloadDialog downloadDialog = new DownloadDialog();
-			downloadDialog.setDownloadEntity(downloadEntity);
-			JOptionPane optionPane = new JOptionPane();
-			JDialog dialog = optionPane.createDialog("Download file dialog");
-			dialog.setSize(530, 135);
-			dialog.setLocationRelativeTo(mainFrameDesign);
-			downloadDialog.setDialog(dialog);
-			dialog.setContentPane(downloadDialog);
-			dialog.setVisible(true);
+			ComponentUtils.showDialog(downloadEntity);
 		}
 
 		if (ae.getSource() == mainFrameDesign.exchange) {

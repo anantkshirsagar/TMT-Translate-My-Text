@@ -26,4 +26,10 @@ public final class Resources {
 	public static final String CREATE_PSQL_TABLES = "resources" + File.separator + "database" + File.separator
 			+ "tmt_psql_tables.sql";
 	public static final String TMT_CFG = "tmt-configurations.properties";
+	
+	public static final String ERROR_TITLE = "Error";
+	public static final String INFO_TITLE = "Information";
+	
+	public static final String CONNECTION_CHECK_URL = "http://www.google.com";
+	public static final String DOWNLOAD = "Download";
 }

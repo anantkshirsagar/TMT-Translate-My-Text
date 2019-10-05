@@ -22,5 +22,7 @@ public final class UIConstants {
 	public static final String LANGUAGE_SOURCE_PATH = "lang/supported-lang.properties";
 
 	public static final String[] COLUMN_NAMES = { "Sr No", "Creation Date", "Source Language", "Target Language",
-			"View", "Download" };
+			"Download" };
+	
+	public static final String DATE_FORMAT = "dd-MMM-yyyy HH:mm:ss";
 }

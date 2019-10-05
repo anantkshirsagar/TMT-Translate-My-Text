@@ -13,6 +13,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileSystemView;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.tmt.app.ui.IDesign;
 import com.tmt.constants.Resources;
 import com.tmt.model.DownloadEntity;
@@ -21,17 +24,16 @@ import com.tmt.util.ComponentUtils;
 
 public class DownloadDialog extends JPanel implements IDesign, ActionListener {
 
+	private static final Logger LOG = LoggerFactory.getLogger(DownloadDialog.class);
 	private static final long serialVersionUID = 1L;
 	private DownloadEntity downloadEntity;
 	private String folderPath;
 	private JFileChooser fileChooser;
 	private JButton download, cancel, browse;
 	private JDialog dialog;
-	private boolean isFromDB;
 	private JComboBox<String> extensionComboBox;
 
-	public DownloadDialog(DownloadEntity downloadEntity, boolean isFromDB) {
-		this.isFromDB = isFromDB;
+	public DownloadDialog(DownloadEntity downloadEntity) {
 		setDownloadEntity(downloadEntity);
 		setDialogProperties();
 	}
@@ -88,29 +90,28 @@ public class DownloadDialog extends JPanel implements IDesign, ActionListener {
 			int result = fileChooser.showOpenDialog(null);
 			if (result == JFileChooser.APPROVE_OPTION) {
 				folderPath = fileChooser.getSelectedFile().getAbsolutePath();
-				System.out.println(folderPath);
+				LOG.debug("Folder path {}", folderPath);
 			}
 		}
 
 		if (ae.getSource() == download) {
-			if (isFromDB) {
-
-			} else {
-				System.out.println("In download from UI");
-				downloadEntity.setFolderPath(folderPath);
-				downloadEntity.setExtension("." + extensionComboBox.getSelectedItem().toString());
-				System.out.println(downloadEntity);
-				DownloadService downloadService = new DownloadService();
-				try {
-					downloadService.download(downloadEntity);
-					getDialog().dispose();
-					JOptionPane.showMessageDialog(null, "File download successfully", "Information",
-							JOptionPane.INFORMATION_MESSAGE);
-				} catch (IOException e) {
-					JOptionPane.showMessageDialog(null, "Error occured while download", "Error",
-							JOptionPane.ERROR_MESSAGE);
-					System.out.println(" Exception while downloading: " + e);
-				}
+			downloadEntity.setFolderPath(folderPath);
+			downloadEntity.setExtension("." + extensionComboBox.getSelectedItem().toString());
+			if (ComponentUtils.isValidDownloadEntity(downloadEntity)) {
+				JOptionPane.showMessageDialog(null, ComponentUtils.getErrorMessage(), Resources.ERROR_TITLE,
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			DownloadService downloadService = new DownloadService();
+			try {
+				downloadService.download(downloadEntity);
+				getDialog().dispose();
+				LOG.debug("File download at specified path");
+				JOptionPane.showMessageDialog(null, "File download successfully. Path " + folderPath, "Information",
+						JOptionPane.INFORMATION_MESSAGE);
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null, "Error occured while download", "Error", JOptionPane.ERROR_MESSAGE);
+				LOG.debug("Exception while downloading {}", e);
 			}
 		}
 

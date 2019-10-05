@@ -13,7 +13,6 @@ public class MenuBar extends JMenuBar {
 
 	private JMenu file, help;
 	public JMenuItem upload, recent;
-	public JMenuItem userManual;
 	public JMenuItem fontSettings;
 
 	public MenuBar() {
@@ -34,10 +33,7 @@ public class MenuBar extends JMenuBar {
 
 		recent = new JMenuItem("Recent");
 		recent.setMnemonic(KeyEvent.VK_R);
-		
-		userManual = new JMenuItem("User Manual");
-		userManual.setMnemonic(KeyEvent.VK_U);
-		
+
 		fontSettings = new JMenuItem("Font Settings");
 		fontSettings.setMnemonic(KeyEvent.VK_S);
 	}
@@ -45,9 +41,7 @@ public class MenuBar extends JMenuBar {
 	public void addItems() {
 		file.add(upload);
 		file.add(recent);
-		help.add(userManual);
 		help.add(fontSettings);
-		
 		add(file);
 		add(help);
 	}
@@ -55,7 +49,6 @@ public class MenuBar extends JMenuBar {
 	public void addActionListeners(MenuBarActionListeners menuBarActionListener) {
 		upload.addActionListener(menuBarActionListener);
 		recent.addActionListener(menuBarActionListener);
-		userManual.addActionListener(menuBarActionListener);
-		fontSettings.addActionListener(menuBarActionListener);	
+		fontSettings.addActionListener(menuBarActionListener);
 	}
 }

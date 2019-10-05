@@ -13,15 +13,19 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.tmt.app.ui.IDesign;
 import com.tmt.constants.Resources;
 import com.tmt.util.ComponentUtils;
 import com.tmt.util.Utility;
 
 public class UploadDialog extends JPanel implements IDesign, ActionListener {
+
+	private static final Logger LOG = LoggerFactory.getLogger(UploadDialog.class);
 	private static final long serialVersionUID = 1L;
 
-	private JFileChooser fileChooser;
 	private JButton upload, cancel, browse;
 	private JDialog dialog;
 	private String filePath;
@@ -63,33 +67,41 @@ public class UploadDialog extends JPanel implements IDesign, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == browse) {
-			fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-			FileNameExtensionFilter fileFilter = new FileNameExtensionFilter("Files", Resources.EXTENSION);
+			LOG.debug("Browser action");
+			JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+			FileNameExtensionFilter fileFilter = new FileNameExtensionFilter("Files", Resources.TXT);
 			fileChooser.setFileFilter(fileFilter);
 
 			int r = fileChooser.showOpenDialog(null);
 			if (r == JFileChooser.APPROVE_OPTION) {
 				filePath = fileChooser.getSelectedFile().getAbsolutePath();
-				System.out.println(filePath);
+				LOG.debug("Absolute file path {}", filePath);
 			}
 		}
 
 		if (ae.getSource() == upload) {
 			if (filePath == null) {
-				JOptionPane.showMessageDialog(null, "Please select target folder!", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Please select target folder!", Resources.ERROR_TITLE,
+						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			String fileContent = null;
 			try {
 				fileContent = ComponentUtils.getFileContents(filePath);
 			} catch (IOException e) {
-				JOptionPane.showMessageDialog(null, "File does not contains data!", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Exception: " + e, Resources.ERROR_TITLE,
+						JOptionPane.ERROR_MESSAGE);
+				return;
 			}
 			if (fileContent == null || fileContent.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "File does not contains data!", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "File does not contains data!", Resources.ERROR_TITLE,
+						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			Utility.getMainFrameDesign().inputEditor.setText(fileContent);
+			JOptionPane.showMessageDialog(null, "Upload successful", Resources.INFO_TITLE,
+					JOptionPane.INFORMATION_MESSAGE);
+			Utility.getMainFrameDesign().convert.setEnabled(true);
 			getDialog().dispose();
 		}
 

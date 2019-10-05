@@ -8,8 +8,6 @@ import com.tmt.constants.LookAndFeelType;
 /**
  * This class sets look and feel to window
  * 
- * @author Anant Kshirsagar
- *
  */
 public class LookAndFeelUtils {
 	public static void setLookAndFeel(LookAndFeelType type) throws ClassNotFoundException, InstantiationException,
@@ -29,7 +27,7 @@ public class LookAndFeelUtils {
 			typeClass = "javax.swing.plaf.metal.MetalLookAndFeel";
 			break;
 		case WINDOWS_CLASSIC:
-			typeClass = "javax.swing.plaf.metal.WindowsClassicLookAndFeel";
+			typeClass = "com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel";
 		}
 		UIManager.setLookAndFeel(typeClass);
 	}

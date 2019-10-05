@@ -16,12 +16,15 @@ public class RecentFrame extends JFrame implements IFrameProperties {
 		
 		addCenterPanel();
 		Utility.setRecentFrameDesign(recentFrameDesign);
+		
 		after(this);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	
 	public void addCenterPanel(){
 		recentFrameDesign = new RecentFrameDesign();
+		recentFrameDesign.init();
+		recentFrameDesign.addItems();
 		this.add(recentFrameDesign);
 	}
 }

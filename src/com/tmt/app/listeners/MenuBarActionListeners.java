@@ -37,11 +37,6 @@ public class MenuBarActionListeners implements ActionListener {
 			uploadDialog.setDialog(dialog);
 			dialog.setContentPane(uploadDialog);
 			dialog.setVisible(true);
-			JOptionPane.showMessageDialog(null, "Upload successful");
-		}
-
-		if (menuBar.userManual.isArmed()) {
-			LOG.debug("User manual");
 		}
 
 		if (menuBar.recent.isArmed()) {

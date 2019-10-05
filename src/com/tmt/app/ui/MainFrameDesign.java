@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jidesoft.swing.ComboBoxSearchable;
+import com.tmt.app.listeners.InputEditorKeyListener;
 import com.tmt.constants.Resources;
 import com.tmt.constants.UIConstants;
 import com.tmt.util.ComponentUtils;
@@ -32,7 +33,7 @@ public class MainFrameDesign extends JPanel implements IDesign {
 	private JLabel inputLabel, outputLabel;
 	private Font font = new Font(null, Font.PLAIN, UIConstants.DEFAULT_FONT_SIZE);
 	private String[] languages;
-
+	
 	public MainFrameDesign() {
 		setLayout(null);
 		loadLanguages();
@@ -59,6 +60,7 @@ public class MainFrameDesign extends JPanel implements IDesign {
 
 		inputEditor = new JTextPane();
 		inputEditor.setFont(font);
+		new InputEditorKeyListener(inputEditor);
 		inputScrollPane = new JScrollPane(inputEditor);
 		inputScrollPane.setBounds(30, 65, UIConstants.EDITOR_WIDTH, UIConstants.EDITOR_HEIGHT);
 		inputScrollPane.setBorder(ComponentUtils.getBorder("Input text"));
@@ -74,7 +76,8 @@ public class MainFrameDesign extends JPanel implements IDesign {
 
 		convert = new JButton("Convert  >>");
 		convert.setBounds(UIConstants.BUTTON_X_AXIS, 250, UIConstants.BUTTON_Y_AXIS, UIConstants.COMPONENT_HEIGHT);
-
+		convert.setEnabled(false);
+		
 		exchange = new JButton();
 		ImageIcon imageIcon = null;
 		try {
@@ -88,7 +91,6 @@ public class MainFrameDesign extends JPanel implements IDesign {
 
 		outputEditor = new JTextPane();
 		outputEditor.setFont(font);
-
 		outputScrollPane = new JScrollPane(outputEditor);
 		outputScrollPane.setBounds(740, 65, UIConstants.EDITOR_WIDTH, UIConstants.EDITOR_HEIGHT);
 		outputScrollPane.setBorder(ComponentUtils.getBorder("Output text"));
@@ -101,8 +103,7 @@ public class MainFrameDesign extends JPanel implements IDesign {
 
 		save = new JButton("Save");
 		save.setBounds(UIConstants.BUTTON_X_AXIS, 340, 273, UIConstants.COMPONENT_HEIGHT);
-		save.setEnabled(false);
-
+		
 		outputClear = new JButton("Clear");
 		outputClear.setBounds(743, UIConstants.Y_AXIS, UIConstants.COMPONENT_WIDTH, UIConstants.COMPONENT_HEIGHT);
 
