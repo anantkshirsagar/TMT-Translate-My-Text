@@ -9,13 +9,12 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.tmt.app.listeners.MainFrameActionListener;
 import com.tmt.constants.ConfigurationConstants;
 import com.tmt.constants.Resources;
 
 public class ConfigurationReader {
 
-	private static final Logger LOG = LoggerFactory.getLogger(MainFrameActionListener.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ConfigurationReader.class);
 
 	public static Map<String, String> getConfigurationProperties(String configurationFile) throws IOException {
 		LOG.debug("Loading configurations...");
