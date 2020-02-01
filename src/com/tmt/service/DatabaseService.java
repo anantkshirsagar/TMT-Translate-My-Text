@@ -19,7 +19,7 @@ public class DatabaseService {
 		LOG.debug("Loading tables...");
 		Map<String, String> configurationMap = ConfigurationReader.getConfigurationProperties(Resources.TMT_CFG);
 		String propertiesPath = ConfigurationReader.getDBPropertiesPath(configurationMap);
-		SqlFileRunner sqlRunner = new SqlFileRunner(propertiesPath, Resources.CREATE_MYSQL_TABLES);
+		SqlFileRunner sqlRunner = new SqlFileRunner(propertiesPath, Resources.CREATE_PSQL_TABLES);
 		sqlRunner.runScript();
 		LOG.debug("Tables created successfully");
 	}
