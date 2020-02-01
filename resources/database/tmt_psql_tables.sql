@@ -1,4 +1,4 @@
-create table translation_entity(
+create table if not exists translation_entity(
 id serial primary key,
 source_language varchar(255) NOT NULL,
 target_language varchar(255) NOT NULL,
